@@ -1,0 +1,9 @@
+<h1>Doctor <%= @doctor.name() %>, <%= @doctor.specialty() %></h1>
+<h2>Patients:</h2>
+  <ul>
+    <% Patient.all().each() do |patient|
+      if patient.doctor_id.==(@doctor.id) %>
+        <li><%= patient.name()%>, <%= patient.birthdate() %></li>
+      <%end%>
+    <%end%>
+  </ul>
