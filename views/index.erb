@@ -1,6 +1,9 @@
 <h1 class="jumbotron">Welcome to the Doctor's Office!</h1>
 
 <% if @doctors.any?() %>
+<div class="col">
+
+</div>
 <h2>Doctors:</h2>
 
 <ul class="well">
@@ -38,6 +41,13 @@
 <h2>There are not any patients in this office yet.</h2>
 <% end %>
 
+<h2>Add a New Medical Specialty:</h2>
+<form action="/new_specialty" method="post">
+  <label for="specialty">Specialty</label>
+  <input id="specialty" name="specialty" type="text">
+  <button class="btn-primary" type="submit">Add Specialty</button>
+</form>
+
 <h2>Add a New Doctor:</h2>
 
 <form action="/new_doctor" method="post">
@@ -45,11 +55,16 @@
   <input id="name" name="name" type="text">
 
   <label for="specialty">Doctor Specialty</label>
-  <input id="specialty" name="specialty" type="text">
+    <select class="form control" name="specialty" id="specialty">
+      <% @specialties.each() do |specialty|%>
+          <option><%= specialty.name %></option>
+        <%end%>
+      </select>
 
+  </select>
   <button class="btn-primary" type="submit">Add Doctor</button>
 </form>
-<h2>Add a new patient</h2>
+<h2>Add a New Patient</h2>
 <form action="/new_patient" method="post">
   <label for="patient">Patient Name</label>
   <input id="patient" name="patient" type="text">
@@ -59,3 +74,4 @@
 
   <button class="btn-primary" type="submit">Add Patient</button>
 </form>
+<a href="/clear"><button class="btn-primary" type="button" name="clear">Clear Doctors</button></a>

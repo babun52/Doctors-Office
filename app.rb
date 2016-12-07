@@ -11,6 +11,7 @@ DB = PG.connect({:dbname => 'doctors_office_test'})
 get('/') do
   @doctors = Doctor.all()
   @patients = Patient.all()
+  @specialties = Specialty.all()
   erb(:index)
 end
 
@@ -21,6 +22,7 @@ post('/new_doctor') do
   doctor.save()
   @doctors = Doctor.all()
   @patients = Patient.all()
+  @specialties = Specialty.all()
   erb(:index)
 end
 
@@ -31,6 +33,7 @@ post('/new_patient') do
   patient.save()
   @doctors = Doctor.all()
   @patients = Patient.all()
+  @specialties = Specialty.all()
   erb(:index)
 end
 
@@ -41,10 +44,30 @@ post('/assign') do
   DB.exec("UPDATE patients SET doctor_id = #{doctor_id} WHERE id = #{patient_id};")
   @doctors = Doctor.all()
   @patients = Patient.all()
+  @specialties = Specialty.all()
   erb(:index)
 end
 
 get('/doctor/:id') do
   @doctor = Doctor.find(params.fetch('id').to_i())
+  @specialties = Specialty.all()
   erb(:doctor)
+end
+
+post('/new_specialty') do
+  specialty_name = params.fetch('specialty')
+  specialty = Specialty.new({:name => specialty_name, :id => nil})
+  specialty.save()
+  @doctors = Doctor.all()
+  @patients = Patient.all()
+  @specialties = Specialty.all()
+  erb(:index)
+end
+
+get('/clear') do
+  DB.exec("DELETE FROM doctors *;")
+  @doctors = Doctor.all()
+  @patients = Patient.all()
+  @specialties = Specialty.all()
+  erb(:index)
 end
